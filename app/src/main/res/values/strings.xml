@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MCRobotController</string>
+    <string name="app_name_display">MCRobot Controller</string>
+    <string name="app_name_launchscreen_display">MCRobot\nController</string>
 </resources>
