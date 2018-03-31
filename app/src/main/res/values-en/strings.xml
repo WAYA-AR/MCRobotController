@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MCRobotController</string>
+    <string name="app_name_display">MCRobot Controller</string>
+    <string name="app_name_launchscreen_display">MCRobot\nController</string>
+
+    <string name="permission_needed_title">Missing permissions</string>
+    <string name="permission_needed_message">The permission %1$s is needed</string>
+    <string name="permission_needed_plural_message">The following permissions are needed: %1$s and %2$s</string>
+</resources>

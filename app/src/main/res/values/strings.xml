@@ -2,4 +2,8 @@
     <string name="app_name">MCRobotController</string>
     <string name="app_name_display">MCRobot Controller</string>
     <string name="app_name_launchscreen_display">MCRobot\nController</string>
+
+    <string name="permission_needed_title">Permissions manquantes</string>
+    <string name="permission_needed_message">La permission %1$s est nécessaire</string>
+    <string name="permission_needed_plural_message">Les permission suivantes sont nécessaires: %1$s et %2$s</string>
 </resources>
