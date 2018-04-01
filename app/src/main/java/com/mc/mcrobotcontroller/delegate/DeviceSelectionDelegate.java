@@ -26,7 +26,7 @@ public class DeviceSelectionDelegate implements DiscoveryCallback {
 
     private OnScanListener mOnScanListener;
 
-    public DeviceSelectionDelegate(MCRobotControllerApplication application, Context context, OnScanListener onScanListener){
+    public DeviceSelectionDelegate(MCRobotControllerApplication application, Context context, OnScanListener onScanListener) {
         mApplication = application;
         mContext = context;
         mOnScanListener = onScanListener;
@@ -36,29 +36,54 @@ public class DeviceSelectionDelegate implements DiscoveryCallback {
 
 
     //
-    public void scanDevices(){
-        if (mOnScanListener == null){
+    public void scanDevices() {
+        if (mOnScanListener == null) {
             return;
         }
 
-        if(!mBluetooth.isEnabled())
+        if (!mBluetooth.isEnabled())
             mBluetooth.enable();
 
         mBluetooth.startScanning();
     }
 
-    public void onStart(){
+    public void pairDevice(BluetoothDevice device, Boolean save) {
+        if (save) {
+            mApplication.getPrefUtils().addDevice(device);
+        }
+
+        if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+            if (mScannedDevices != null) {
+                mOnScanListener.onPaired(device);
+            }
+        }else{
+            mBluetooth.pair(device);
+        }
+    }
+
+    public void addDeviceToPrefered(BluetoothDevice device){
+        mApplication.getPrefUtils().addDevice(device);
+        scanDevices();
+    }
+
+    public void removeDeviceFromPrefered(BluetoothDevice device){
+        mApplication.getPrefUtils().removeDevice(device);
+        scanDevices();
+    }
+
+    public void onStart() {
         mBluetooth.onStart();
     }
 
-    public void onStop(){
+    public void onStop() {
         if (mBluetooth != null || mBluetooth.isEnabled())
-        mBluetooth.onStop();
+            mBluetooth.onStop();
     }
+
     //DiscoveryCallback
     @Override
     public void onDiscoveryStarted() {
-        Log.d(this.getClass().getCanonicalName(),"onDiscoveryStarted");
+        Log.d(this.getClass().getCanonicalName(), "onDiscoveryStarted");
         mScannedDevices.clear();
     }
 
@@ -70,17 +95,17 @@ public class DeviceSelectionDelegate implements DiscoveryCallback {
         if (paired != null && !paired.isEmpty()) {
 
             List<Pair<String, String>> preferedDevices = mApplication.getPrefUtils().getSavedDevices();
-            if (!preferedDevices.isEmpty()){
+            if (!preferedDevices.isEmpty()) {
                 List<BluetoothDevice> prefered = new ArrayList<>();
-                for(Pair<String, String> preferedDevice : preferedDevices){
-                    for(BluetoothDevice pairedDevice: paired){
-                        if (pairedDevice.getAddress().equals(preferedDevice.second)){
+                for (Pair<String, String> preferedDevice : preferedDevices) {
+                    for (BluetoothDevice pairedDevice : paired) {
+                        if (pairedDevice.getAddress().equals(preferedDevice.second)) {
                             prefered.add(pairedDevice);
                         }
                     }
                 }
                 //Prefered
-                if (!prefered.isEmpty()){
+                if (!prefered.isEmpty()) {
                     result.add(new AdapterDevice("prefered devices"));
                     for (BluetoothDevice device : prefered) {
                         result.add(new AdapterDevice(device, true, true));
@@ -94,13 +119,13 @@ public class DeviceSelectionDelegate implements DiscoveryCallback {
             }
         }
         //Scanned
-        if(!mScannedDevices.isEmpty()) {
+        if (!mScannedDevices.isEmpty()) {
             result.add(new AdapterDevice("scanned devices"));
             for (BluetoothDevice device : mScannedDevices) {
-                result.add(new AdapterDevice(device,true));
+                result.add(new AdapterDevice(device, true));
             }
         }
-        if (mOnScanListener != null){
+        if (mOnScanListener != null) {
             mOnScanListener.onScannedDevices(result);
         }
     }
@@ -116,21 +141,31 @@ public class DeviceSelectionDelegate implements DiscoveryCallback {
 
     @Override
     public void onDevicePaired(BluetoothDevice device) {
+        if (mScannedDevices != null) {
+            mOnScanListener.onPaired(device);
+        }
 
     }
 
     @Override
     public void onDeviceUnpaired(BluetoothDevice device) {
+        if (mScannedDevices != null) {
+            mOnScanListener.onFailedPairing(device);
+        }
 
     }
 
     @Override
     public void onError(String message) {
-        Log.e(this.getClass().getCanonicalName(),"onError: " + message);
+        Log.e(this.getClass().getCanonicalName(), "onError: " + message);
 
     }
 
-    public interface OnScanListener{
-       void onScannedDevices(List<AdapterDevice> devices);
+    public interface OnScanListener {
+        void onScannedDevices(List<AdapterDevice> devices);
+
+        void onPaired(BluetoothDevice device);
+
+        void onFailedPairing(BluetoothDevice device);
     }
 }

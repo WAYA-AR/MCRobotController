@@ -49,4 +49,8 @@ public class AdapterDevice {
     public boolean isAvailable() {
         return isAvailable;
     }
+
+    public boolean isPrefered() {
+        return isPrefered;
+    }
 }

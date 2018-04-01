@@ -11,6 +11,11 @@
     <string name="quit_app_title">Quit ?</string>
     <string name="quit_app_message">Do you want to close the application</string>
 
+    <string name="pair_alert_title">Pair</string>
+    <string name="pair_alert_message">pair ?</string>
+    <string name="pair_save_button">pair et save</string>
+    <string name="pair_button">pair</string>
+
     <!--Button-->
     <string name="ok_button">ok</string>
     <string name="cancel_button">cancel</string>
