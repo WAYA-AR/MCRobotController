@@ -47,9 +47,9 @@ public class DeviceSelectionActivity extends AppCompatActivity implements Device
     @Override
     public void onBackPressed() {
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Quitter?")
-                .setMessage("Etes-vous sûr de vouloir quitter l'application?")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                .setTitle(R.string.quit_app_title)
+                .setMessage(R.string.quit_app_message)
+                .setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -59,7 +59,7 @@ public class DeviceSelectionActivity extends AppCompatActivity implements Device
                         }
                     }
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }

@@ -6,4 +6,12 @@
     <string name="permission_needed_title">Permissions manquantes</string>
     <string name="permission_needed_message">La permission %1$s est nécessaire</string>
     <string name="permission_needed_plural_message">Les permission suivantes sont nécessaires: %1$s et %2$s</string>
+
+
+    <string name="quit_app_title">Quitter ?</string>
+    <string name="quit_app_message">Êtes-vous sûr de vouloir fermer l\'application ?</string>
+
+    <!--Button-->
+    <string name="ok_button">ok</string>
+    <string name="cancel_button">annuler</string>
 </resources>
