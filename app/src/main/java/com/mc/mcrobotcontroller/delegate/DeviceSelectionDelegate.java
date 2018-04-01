@@ -83,7 +83,7 @@ public class DeviceSelectionDelegate implements DiscoveryCallback {
                 if (!prefered.isEmpty()){
                     result.add(new AdapterDevice("prefered devices"));
                     for (BluetoothDevice device : prefered) {
-                        result.add(new AdapterDevice(device, true));
+                        result.add(new AdapterDevice(device, true, true));
                     }
                 }
             }

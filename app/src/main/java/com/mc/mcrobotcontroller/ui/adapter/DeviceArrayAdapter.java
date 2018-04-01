@@ -46,6 +46,9 @@ public class DeviceArrayAdapter extends ArrayAdapter<AdapterDevice> {
         holder.titleView.setTextSize(device.isHeader() ? 30 : 20);
         v.setBackgroundColor(ContextCompat.getColor(getContext(), (device.isHeader() || device.isAvailable()) ? android.R.color.white : android.R.color.darker_gray));
 
+//        if (!device.isHeader()){
+//            Log.d(this.getClass().getCanonicalName(), "" + device.getDevice().getBondState());
+//        }
 
         return v;
     }

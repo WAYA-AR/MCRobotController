@@ -12,11 +12,20 @@ public class AdapterDevice {
     private String headerTitle;
     private boolean isHeader;
     private boolean isAvailable;
+    private boolean isPrefered = false;
 
     public AdapterDevice(BluetoothDevice device, boolean isAvailable) {
         this.device = device;
         this.isHeader = false;
         this.isAvailable = isAvailable;
+        this.isPrefered = false;
+    }
+
+    public AdapterDevice(BluetoothDevice device, boolean isAvailable, boolean isPrefered) {
+        this.device = device;
+        this.isHeader = false;
+        this.isAvailable = isAvailable;
+        this.isPrefered = isPrefered;
     }
 
     public AdapterDevice(String headerTitle) {
