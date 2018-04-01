@@ -4,6 +4,8 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.util.Log;
 
+import com.mc.mcrobotcontroller.data.AdapterDevice;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,15 +61,22 @@ public class DeviceSelectionDelegate implements DiscoveryCallback {
     @Override
     public void onDiscoveryFinished() {
         Log.d(this.getClass().getCanonicalName(),"onDiscoveryFinished");
+        List<AdapterDevice> result = new ArrayList<>();
+
+        result.add(new AdapterDevice("devices",true, false));
         for (BluetoothDevice device: mDevices){
-            String tmp = device.getName() +  " " + device.getAddress();
-            Log.d(this.getClass().getCanonicalName(),tmp);
+//            String tmp = device.getName() +  " " + device.getAddress();
+//            Log.d(this.getClass().getCanonicalName(),tmp);
+            result.add(new AdapterDevice(device.getName(),false, true));
+        }
+        if (mOnScanListener != null){
+            mOnScanListener.onScannedDevices(result);
         }
     }
 
     @Override
     public void onDeviceFound(BluetoothDevice device) {
-        Log.d(this.getClass().getCanonicalName(),"onDeviceFound");
+//        Log.d(this.getClass().getCanonicalName(),"onDeviceFound");
         mDevices.add(device);
 
     }
@@ -89,6 +98,6 @@ public class DeviceSelectionDelegate implements DiscoveryCallback {
     }
 
     public interface OnScanListener{
-       void onScannedDevices(List<BluetoothDevice> devices);
+       void onScannedDevices(List<AdapterDevice> devices);
     }
 }

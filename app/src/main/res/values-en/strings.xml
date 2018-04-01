@@ -14,4 +14,5 @@
     <!--Button-->
     <string name="ok_button">ok</string>
     <string name="cancel_button">cancel</string>
+    <string name="scan_button">scan</string>
 </resources>
