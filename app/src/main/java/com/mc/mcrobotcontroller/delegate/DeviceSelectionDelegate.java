@@ -3,7 +3,9 @@ package com.mc.mcrobotcontroller.delegate;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.util.Log;
+import android.util.Pair;
 
+import com.mc.mcrobotcontroller.MCRobotControllerApplication;
 import com.mc.mcrobotcontroller.data.AdapterDevice;
 
 import java.util.ArrayList;
@@ -17,13 +19,15 @@ import me.aflak.bluetooth.DiscoveryCallback;
  */
 
 public class DeviceSelectionDelegate implements DiscoveryCallback {
+    private MCRobotControllerApplication mApplication;
     private Bluetooth mBluetooth;
     private Context mContext;
-    private List<BluetoothDevice> mDevices = new ArrayList<>();
+    private List<BluetoothDevice> mScannedDevices = new ArrayList<>();
 
     private OnScanListener mOnScanListener;
 
-    public DeviceSelectionDelegate(Context context, OnScanListener onScanListener){
+    public DeviceSelectionDelegate(MCRobotControllerApplication application, Context context, OnScanListener onScanListener){
+        mApplication = application;
         mContext = context;
         mOnScanListener = onScanListener;
         mBluetooth = new Bluetooth(mContext);
@@ -55,19 +59,46 @@ public class DeviceSelectionDelegate implements DiscoveryCallback {
     @Override
     public void onDiscoveryStarted() {
         Log.d(this.getClass().getCanonicalName(),"onDiscoveryStarted");
-        mDevices.clear();
+        mScannedDevices.clear();
     }
 
     @Override
     public void onDiscoveryFinished() {
-        Log.d(this.getClass().getCanonicalName(),"onDiscoveryFinished");
         List<AdapterDevice> result = new ArrayList<>();
 
-        result.add(new AdapterDevice("devices",true, false));
-        for (BluetoothDevice device: mDevices){
-//            String tmp = device.getName() +  " " + device.getAddress();
-//            Log.d(this.getClass().getCanonicalName(),tmp);
-            result.add(new AdapterDevice(device.getName(),false, true));
+        List<BluetoothDevice> paired = new ArrayList<>(mBluetooth.getPairedDevices());
+        if (paired != null && !paired.isEmpty()) {
+
+            List<Pair<String, String>> preferedDevices = mApplication.getPrefUtils().getSavedDevices();
+            if (!preferedDevices.isEmpty()){
+                List<BluetoothDevice> prefered = new ArrayList<>();
+                for(Pair<String, String> preferedDevice : preferedDevices){
+                    for(BluetoothDevice pairedDevice: paired){
+                        if (pairedDevice.getAddress().equals(preferedDevice.second)){
+                            prefered.add(pairedDevice);
+                        }
+                    }
+                }
+                //Prefered
+                if (!prefered.isEmpty()){
+                    result.add(new AdapterDevice("prefered devices"));
+                    for (BluetoothDevice device : prefered) {
+                        result.add(new AdapterDevice(device, true));
+                    }
+                }
+            }
+            //Paired
+            result.add(new AdapterDevice("paired devices"));
+            for (BluetoothDevice device : mBluetooth.getPairedDevices()) {
+                result.add(new AdapterDevice(device, true));
+            }
+        }
+        //Scanned
+        if(!mScannedDevices.isEmpty()) {
+            result.add(new AdapterDevice("scanned devices"));
+            for (BluetoothDevice device : mScannedDevices) {
+                result.add(new AdapterDevice(device,true));
+            }
         }
         if (mOnScanListener != null){
             mOnScanListener.onScannedDevices(result);
@@ -77,7 +108,9 @@ public class DeviceSelectionDelegate implements DiscoveryCallback {
     @Override
     public void onDeviceFound(BluetoothDevice device) {
 //        Log.d(this.getClass().getCanonicalName(),"onDeviceFound");
-        mDevices.add(device);
+        if (mScannedDevices.contains(device))
+            return;
+        mScannedDevices.add(device);
 
     }
 

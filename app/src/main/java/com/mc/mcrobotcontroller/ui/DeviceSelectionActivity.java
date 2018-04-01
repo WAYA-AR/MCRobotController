@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.mc.mcrobotcontroller.MCRobotControllerApplication;
 import com.mc.mcrobotcontroller.R;
 import com.mc.mcrobotcontroller.data.AdapterDevice;
 import com.mc.mcrobotcontroller.delegate.DeviceSelectionDelegate;
@@ -49,7 +50,7 @@ public class DeviceSelectionActivity extends AppCompatActivity implements Device
         mLoadingView = findViewById(R.id.loading_view);
         mLoadingView.setVisibility(View.VISIBLE);
 
-        mDelegate = new DeviceSelectionDelegate(this, this);
+        mDelegate = new DeviceSelectionDelegate((MCRobotControllerApplication) getApplication(),this, this);
     }
 
     @Override
