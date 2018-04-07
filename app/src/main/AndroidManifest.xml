@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.DeviceSelectionActivity"></activity>
-        <activity android:name=".ui.CommunicationActivity"></activity>
+        <activity android:name=".ui.JoystickActivity"></activity>
     </application>
 
 </manifest>

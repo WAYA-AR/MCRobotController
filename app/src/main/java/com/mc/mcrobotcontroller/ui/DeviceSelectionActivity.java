@@ -17,6 +17,7 @@ import com.mc.mcrobotcontroller.R;
 import com.mc.mcrobotcontroller.data.AdapterDevice;
 import com.mc.mcrobotcontroller.delegate.DeviceSelectionDelegate;
 import com.mc.mcrobotcontroller.ui.adapter.DeviceArrayAdapter;
+import com.mc.mcrobotcontroller.utils.ToolsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +113,9 @@ public class DeviceSelectionActivity extends AppCompatActivity implements Device
     @Override
     public void onPaired(BluetoothDevice device) {
         mLoadingView.setVisibility(View.GONE);
-        startActivity(new Intent(this, CommunicationActivity.class));
+        Intent intent = new Intent(this, JoystickActivity.class);
+        intent.putExtra(ToolsUtils.EXTRA_DEVICE_KEY, device);
+        startActivity(intent);
     }
 
     @Override

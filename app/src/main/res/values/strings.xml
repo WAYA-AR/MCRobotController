@@ -11,6 +11,10 @@
     <string name="quit_app_title">Quitter ?</string>
     <string name="quit_app_message">Êtes-vous sûr de vouloir fermer l\'application ?</string>
 
+
+    <string name="disconnect_device_title">Déconnecter ?</string>
+    <string name="disconnect_device_message">Êtes-vous sûr de vouloir vous déconnecter ?</string>
+
     <string name="pair_alert_title">Pair</string>
     <string name="pair_alert_message">pair ?</string>
     <string name="pair_save_button">pair et save</string>
@@ -20,4 +24,13 @@
     <string name="ok_button">ok</string>
     <string name="cancel_button">annuler</string>
     <string name="scan_button">scanner</string>
+    <string name="activate_motor_button">activer</string>
+    <string name="reset_button">reset</string>
+
+    <string name="bluetooth_connected">Device Connected.</string>
+    <string name="bluetooth_connecting">Connecting…</string>
+    <string name="bluetooth_disconnected">Device Disconnected.</string>
+    <string name="bluetooth_connect_in_3sec">Could not connect. New attempt in 3sec…</string>
+    <string name="bluetooth_turning_on">Turning bluetooth on…</string>
+
 </resources>

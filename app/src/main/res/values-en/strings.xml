@@ -11,6 +11,9 @@
     <string name="quit_app_title">Quit ?</string>
     <string name="quit_app_message">Do you want to close the application</string>
 
+    <string name="disconnect_device_title">Disconnect ?</string>
+    <string name="disconnect_device_message">Do you want to disconnect this device ?</string>
+
     <string name="pair_alert_title">Pair</string>
     <string name="pair_alert_message">pair ?</string>
     <string name="pair_save_button">pair et save</string>
@@ -20,4 +23,6 @@
     <string name="ok_button">ok</string>
     <string name="cancel_button">cancel</string>
     <string name="scan_button">scan</string>
+    <string name="activate_motor_button">activate</string>
+    <string name="reset_button">reset</string>
 </resources>
